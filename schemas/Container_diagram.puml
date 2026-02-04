@@ -1,0 +1,54 @@
+@startuml
+title C4. Диаграмма контейнеров Умного дома
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Пользователи системы
+Person(user, "Пользователь", "Владелец дома")
+Person(admin, "Администратор", "Специалист компании")
+
+' Микросервисы Умного дома
+Container(api_gateway, "API gateway", "Роутинг-сервис")
+
+Container(user_service, "UserService", "Сервис управления пользователями")
+Container(house_service, "HouseService", "Сервис управления домами")
+Container(device_service, "DeviceService", "Сервис управления устройствами")
+Container(telemetry_service, "TelemetryService", "Сервис телеметрии")
+Container(scenario_service, "ScenarioService", "Сервис настройки сценариев")
+
+Container(message_service, "MessageService", "Kafka", "Очередь сообщений")
+
+ContainerDb(user_service_db, "UserDb", "База данных пользователей")
+ContainerDb(house_service_db, "HouseDb", "База данных домов")
+ContainerDb(device_service_db, "DeviceDb", "База данных устройств")
+ContainerDb(telemetry_service_db, "TelemetryDb", "База данных телеметрии")
+ContainerDb(scenario_service_db, "ScenarioDb", "База данных сценариев")
+
+Container_Ext(devices, "Devices", "Датчики в домах")
+Container_Ext(temperature_api, "TemperatureApi", "Температура окружающей среды")
+
+' Взаимодействие
+Rel(user, api_gateway, "Использует")
+Rel(admin, api_gateway, "Использует")
+
+Rel(api_gateway, user_service, "Запросы по пользователям", "HTTP")
+Rel(api_gateway, house_service, "Запросы по домам", "HTTP")
+Rel(api_gateway, device_service, "Запросы по устройствам", "HTTP")
+Rel(api_gateway, telemetry_service, "Запросы по телеметрии устройств", "HTTP")
+Rel(api_gateway, scenario_service, "Запросы по сценариям", "HTTP")
+
+Rel(user_service, user_service_db, "Данные пользователей", "PostgreSQL")
+Rel(house_service, house_service_db, "Данные домов", "PostgreSQL")
+Rel(device_service, device_service_db, "Данные устройств", "PostgreSQL")
+Rel(telemetry_service, telemetry_service_db, "Данные телеметрии", "PostgreSQL")
+Rel(scenario_service, scenario_service_db, "Данные сценариев", "PostgreSQL")
+
+Rel(scenario_service, temperature_api, "Данные по температуре окружающей среды", "HTTP")
+Rel(devices, api_gateway, "Данные устройств", "HTTP")
+Rel(house_service, user_service, "Привязка дома к пользователю")
+Rel(device_service, house_service, "Привязка устройства к дому")
+Rel(device_service, message_service, "Данные от устройств")
+Rel(telemetry_service, message_service, "Чтение очереди")
+Rel(scenario_service, message_service, "Чтение очереди")
+
+@enduml

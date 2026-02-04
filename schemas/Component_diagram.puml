@@ -1,0 +1,35 @@
+@startuml
+title C4. Диаграмма компонентов сервиса устройств Умного дома
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Компонент Сервис устройств
+Container(DeviceServiceContainer, "DeviceService", ".Net") {
+  Component(DeviceController, "DeviceController", "Обрабатывает запросы по устройствам")
+  
+  Component(message_handler, "MessageProducer", "Отправка сообщений в очередь")
+  Component(repository_service, "Repository", "Сервис взаимодействия с бд")
+  Component(device_service, "DeviceService", "Обработка сообщений от устройств в домах")
+  Component(device_registration_service, "DeviceRegistrationService", "Добавление новых устройств")
+  
+  ComponentDb(database, "Database", "PostgreSQL")
+}
+
+Container(house_service, "HouseService", "Сервис управления домами")
+ContainerQueue(message_queue, "MessageQueue", "Kafka", "Очередь сообщений")
+Container(api_gateway, "ApiGateway", "Роутинг-сервис")
+
+' Взаимодействие компонентов
+Rel(api_gateway, DeviceController, "Входящие запросы")
+
+Rel(DeviceController, device_service, "Данные по устройствам")
+Rel(device_service, repository_service, "Использует")
+Rel(DeviceController, device_registration_service, "Данные по новым устройствам")
+Rel(device_registration_service, repository_service, "Использует")
+Rel(device_registration_service, house_service, "Устанавливает принадлежность")
+Rel(device_service, message_handler, "Использует")
+Rel(message_handler, message_queue, "Отправка сообщений в очередь")
+
+Rel(repository_service, database, "Работа с БД")
+
+@enduml
