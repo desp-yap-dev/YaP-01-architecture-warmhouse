@@ -1,0 +1,100 @@
+@startuml
+
+title ER Diagram
+
+entity "User" {
+  * Id : int
+  * FirstName : string
+  * LastName : string
+  * MiddleName : string
+  * IsActive : bool
+  * CreatedAt : datetime
+  * IsDeleted: bool
+  * DeleteDate: datetime
+  * PasswordHash : string
+}
+
+entity "Role" {
+    * Id : int
+    * Name : string
+    * Description : string
+}
+
+entity "UserRoles" {
+    * UserId: int
+    * RoleId: int
+}
+
+entity "House" {
+    * Id : int
+    * Address : string
+    * OwnerId : int
+}
+
+entity "HouseMembers" {
+    * HouseId : int
+    * UserId : int
+    * RoleId : int
+    * AddedAt: datetime
+}
+
+entity "Device" {
+    * Id : int
+    * DeviceName : string
+    * HouseId : int
+    * DeviceTypeId : int
+    * State : string
+    * SerialNumber: string
+    * IpAddress: string
+    * MacAddress: string
+    * CreatedAt: datetime
+}
+
+entity "DeviceType" {
+    * Id : int
+    * TypeName : string
+}
+
+entity "Scenario" {
+    * Id: int
+    * Name: string
+    * DeviceId: int
+    * TriggerParamId: int
+    * TriggerValue: string
+    * Action: string
+    * UserId: int
+}
+
+entity "TelemetryParam" {
+    * Id: int
+    * ParamName: string
+    * ParamUnit: string
+}
+
+entity "Telemetry" {
+    * Id: long
+    * DeviceId: int
+    * TelemetryParamId: int
+    * Value: string
+    * Timestamp: datetime
+}
+
+User ||--o{ UserRoles : has
+Role ||--o{ UserRoles : assigned
+
+User ||--o{ House : owns
+House ||--o{ HouseMembers : has
+User ||--o{ HouseMembers : member
+Role ||--o{ HouseMembers : role
+
+House ||--o{ Device : contains
+DeviceType ||--o{ Device : categorizes
+
+Device ||--o{ Telemetry : produces
+TelemetryParam ||--o{ Telemetry : defines
+
+Device ||--o{ Scenario : triggers
+TelemetryParam ||--o{ Scenario : condition
+User ||--o{ Scenario : creates
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+title C4. Диаграмма классов
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class MessageProducer {
+    + ValidateMessage() : валидация сообщения
+	+ SendMessage() : отправка сообщения в очередь
+}
+
+class DeviceService {
+    + ValidateMessage() : валидация сообщения
+	+ ProcessMessage() : обработка полученного сообщения
+	+ SaveData() : сохранение данных
+}
+
+class DeviceRegistrationService {
+    + ValidateMessage() : валидация сообщения
+	+ ProcessMessage() : обработка полученного сообщения
+	+ TryAddNewHouseDevice() : установка принадлежности устройсва к дому
+	+ SaveData() : сохранение данных
+}
+
+class RepositoryService {
+    + Add() : добавление данных
+	+ Delete() : удаление
+	+ Update() : обновление
+}
+
+DeviceService --> MessageProducer : uses
+DeviceService --> RepositoryService : uses
+DeviceRegistrationService --> RepositoryService : uses
+
+@enduml
