@@ -65,18 +65,9 @@
 
 ### 5. Визуализация контекста системы — диаграмма С4
 
-Добавьте сюда диаграмму контекста в модели C4.
-
-Чтобы добавить ссылку в файл Readme.md, нужно использовать синтаксис Markdown. Это делают так:
-
 ```markdown
-[Текст ссылки](URL)
-```
-
-Замените `Текст ссылки` текстом, который хотите использовать для ссылки. Вместо `URL` вставьте адрес, на который должна вести ссылка. Например:
-
-```markdown
-[Посетите Яндекс](https://ya.ru/)
+[Диаграмма контекста](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Context_diagram.puml)
+[Диаграмма контекста.png](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Context_diagram.png)
 ```
 
 # Задание 2. Проектирование микросервисной архитектуры
@@ -85,29 +76,43 @@
 
 **Диаграмма контейнеров (Containers)**
 
-Добавьте диаграмму.
+```markdown
+[Диаграмма контейнеров](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Container_diagram.puml)
+[Диаграмма контейнеров.png](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Container_diagram.png)
+```
 
 **Диаграмма компонентов (Components)**
 
-Добавьте диаграмму для каждого из выделенных микросервисов.
+```markdown
+[Диаграмма компонентов](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Component_diagram.puml)
+[Диаграмма компонентов.png](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Component_diagram.png)
+```
 
 **Диаграмма кода (Code)**
 
-Добавьте одну диаграмму или несколько.
+```markdown
+[Диаграмма кода](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Code_diagram.puml)
+[Диаграмма кода.png](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/Code_diagram.png)
+```
 
 # Задание 3. Разработка ER-диаграммы
 
-Добавьте сюда ER-диаграмму. Она должна отражать ключевые сущности системы, их атрибуты и тип связей между ними.
+```markdown
+[ER-диаграмма](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/ER_diagram.puml)
+[ER-диаграмма.png](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/ER_diagram.png)
+```
 
 # Задание 4. Создание и документирование API
 
 ### 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+В целом решение будети гибридным, поскольку будет присутствовать как прямое взаимодействие микросервисов между собой, и для таких случае лучше подходит OpenAPI, т.к. и через очередь (Kafka), где лучше подходит уже AsyncApi.
 
 ### 2. Документация API
 
-Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы. Для документирования используйте Swagger/OpenAPI или AsyncAPI.
+```markdown
+[Devices API](https://github.com/desp-yap-dev/YaP-01-architecture-warmhouse/blob/feature/warmhouse/schemas/swagger.json)
+```
 
 # Задание 5. Работа с docker и docker-compose
 
